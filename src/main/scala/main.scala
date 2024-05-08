@@ -1,4 +1,8 @@
 @main
-def main(): Unit = {
 
-}
+import scala.io.Source
+
+object Exercise06_RatingsCounter extends App{
+
+
+})
