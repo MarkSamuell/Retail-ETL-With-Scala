@@ -9,6 +9,11 @@ The project's source code can be found [here](https://github.com/MarkSamuell/Ret
 ## Problem Statement
 The retail store requires a rule engine to automate the qualification of discounts for orders' transactions. The discounts are determined based on several qualifying rules and calculation rules, including product expiration, product type, special promotions, and quantity purchased. Transactions that qualify for multiple discounts receive the top two discounts, and their average is applied.
 
+
+![alt text](process.PNG)
+
+
+
 ## Technical Considerations
 - **Core Functional Logic:** The core logic of the rule engine must adhere to functional programming principles, utilizing only `vals` with no `vars`, avoiding mutable data structures and loops, and ensuring all functions are pure with no side effects.
 - **Logging:** Engine events are logged in a "rules_engine.log" file with timestamp, log level, and message format.
@@ -22,8 +27,6 @@ The project will involve the following steps:
 3. **Logging Implementation:** Set up logging functionality to record engine events.
 4. **Data Persistence:** Calculate final prices for transactions and store them in a database table.
 5. **Code Review and Refinement:** Ensure code quality by reviewing and refining the codebase to meet functional programming and readability standards.
-
-![alt text](process.PNG)
 
 
 ## Usage
