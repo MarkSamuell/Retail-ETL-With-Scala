@@ -1,6 +1,8 @@
 import java.util.Date
 import scala.io.Source
 import java.text.SimpleDateFormat
+import scala.math.BigDecimal
+
 
 
 object RuleEngine extends App {
@@ -21,6 +23,11 @@ object RuleEngine extends App {
 
     // Read lines from the CSV file
     val lines = Source.fromFile("./src/main/resources/TRX1000.csv").getLines().toList.tail
+
+    // Define a function to round a Double value to the nearest three decimal places
+    def rnd(value: Double): Double = {
+        BigDecimal(value).setScale(3, BigDecimal.RoundingMode.HALF_UP).toDouble
+    }
 
     // Convert each line to an Order object
     val ordersList = lines.map { line =>
@@ -56,11 +63,11 @@ object RuleEngine extends App {
             else 0.0
         }
 
-        val finalPrice: Double = order.quantity * order.unitPrice * (1 - averageDiscount) // Calculate final price with discount
+        val finalPrice: Double = order.quantity * order.unitPrice * (1 - rnd(averageDiscount)) // Calculate final price with discount
 
-        val new_order: Order = order.copy(discount = averageDiscount, finalPrice = finalPrice) // Set discount and finalPrice fields
+        val new_order: Order = order.copy(discount = rnd(averageDiscount), finalPrice = rnd(finalPrice)) // Set discount and finalPrice fields
         new_order
     }
 
-    ordersList.take(10).map(x => getOrderWithDiscount(x, getDiscountRules())).foreach(println)
+    ordersList.map(x => getOrderWithDiscount(x, getDiscountRules())).foreach(println)
 }
