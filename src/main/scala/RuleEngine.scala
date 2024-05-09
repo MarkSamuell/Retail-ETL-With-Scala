@@ -13,7 +13,8 @@ object RuleEngine extends App {
                      unitPrice: Double,
                      channel: String,
                      paymentMethod: String,
-                     discount: Double)
+                     discount: Double,
+                     finalPrice: Double)
 
     // Date format for parsing dates
     val dateFormat = new SimpleDateFormat("yyyy-MM-dd")
@@ -28,7 +29,7 @@ object RuleEngine extends App {
         val unitPrice = unitPriceStr.toDouble
         val timestampParsed = timestamp
         val expiryDateParsed = dateFormat.parse(expiryDate) // Parse the expiryDate string to Date
-        Order(timestampParsed, productName, expiryDateParsed, quantity, unitPrice, channel, paymentMethod, 0.0)
+        Order(timestampParsed, productName, expiryDateParsed, quantity, unitPrice, channel, paymentMethod, 0.0, quantity*unitPrice)
     }
 
     // function that returns list of tuples of rules [(QUALIFYING RULES, CALCULATION RULE)]
@@ -49,16 +50,17 @@ object RuleEngine extends App {
     def getOrderWithDiscount(order: Order, rules: List[(Order => Boolean, Order => Double)]): Order = {
         val discount = rules.filter(_._1(order)).map(_._2(order)).sorted(Ordering[Double]).reverse
         println(discount)
-        val averageDiscount = {
-            if (discount.length > 1) {discount.take(2).sum / 2}
+        val averageDiscount: Double = {
+            if (discount.length > 1) { discount.take(2).sum / 2 }
             else if (discount.length == 1) discount(0)
             else 0.0
         }
 
-        val new_order = order.copy(discount = averageDiscount)
+        val finalPrice: Double = order.quantity * order.unitPrice * (1 - averageDiscount) // Calculate final price with discount
+
+        val new_order: Order = order.copy(discount = averageDiscount, finalPrice = finalPrice) // Set discount and finalPrice fields
         new_order
     }
 
     ordersList.take(10).map(x => getOrderWithDiscount(x, getDiscountRules())).foreach(println)
-
 }
