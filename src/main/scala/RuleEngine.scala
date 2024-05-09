@@ -1,9 +1,12 @@
 import java.util.Date
 import scala.io.Source
-import java.util.concurrent.TimeUnit
 import java.text.SimpleDateFormat
 
+
 object RuleEngine extends App {
+
+    // Create an instance of Rules
+
 
     // Define case class Order
     case class Order(timestamp: String,
@@ -30,43 +33,13 @@ object RuleEngine extends App {
         val expiryDateParsed = dateFormat.parse(expiryDate) // Parse the expiryDate string to Date
         Order(timestampParsed, productName, expiryDateParsed, quantity, unitPrice, channel, paymentMethod, 0.0)
     }
-    // Rules definitions each rule has qulification function & calcualtion function
-
-    // rule A
-    def isAQualified(order: Order): Boolean = {
-        val timestampDate = order.timestamp
-        val expiryDate = order.expiryDate
-        val difference = TimeUnit.DAYS.convert(expiryDate.getTime - dateFormat.parse(order.timestamp.substring(0, 10))
-            .getTime, TimeUnit.MILLISECONDS)
-        println ("dff: " + difference + (difference < 30))
-        difference < 30
-    }
-
-    def A(order: Order): Double = {
-        val timestampDate = order.timestamp
-        val expiryDate = order.expiryDate
-        val difference = TimeUnit.DAYS.convert(expiryDate.getTime - dateFormat.parse(order.timestamp.substring(0, 10))
-            .getTime, TimeUnit.MILLISECONDS).toDouble
-        val discount = (30 - difference)/ 100
-        println(discount)
-        discount
-    }
-
-//    //rule B
-//    def isBQualified(order: Order): Boolean = ???
-//    def B(order: Order): Double = ???
-//
-//    //rule c
-//    def isCQualified(order: Order): Boolean = ???
-//    def C(order: Order): Double = ???
-
 
     // function that returns list of tuples of rules [(QUALIFYING RULES, CALCULATION RULE)]
     def getDiscountRules(): List[(Order => Boolean, Order => Double)] = {
         List(
-            ((order: Order) => isAQualified(order), (order: Order) => A(order))
-//            ((order: Order) => isBQualified(order), (order: Order) => B(order)),
-//            ((order: Order) => isCQualified(order), (order: Order) => C(order))
+            ((order: Order) => Rules.isAQualified(order), (order: Order) => Rules.A(order))
+            //            ((order: Order) => isBQualified(order), (order: Order) => B(order)),
+            //            ((order: Order) => isCQualified(order), (order: Order) => C(order))
         )
     }
 
