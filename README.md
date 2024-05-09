@@ -23,7 +23,7 @@ The project will involve the following steps:
 4. **Data Persistence:** Calculate final prices for transactions and store them in a database table.
 5. **Code Review and Refinement:** Ensure code quality by reviewing and refining the codebase to meet functional programming and readability standards.
 
-![alt text](http://url/to/img.png)
+![alt text](./img.png)
 
 
 ## Usage
