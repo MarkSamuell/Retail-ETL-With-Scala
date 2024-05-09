@@ -5,9 +5,6 @@ import java.text.SimpleDateFormat
 
 object RuleEngine extends App {
 
-    // Create an instance of Rules
-
-
     // Define case class Order
     case class Order(timestamp: String,
                      productName: String,
@@ -35,20 +32,25 @@ object RuleEngine extends App {
     }
 
     // function that returns list of tuples of rules [(QUALIFYING RULES, CALCULATION RULE)]
+    /*
+    if you want to add a new rule, kindly add your new rules here :)
+     */
     def getDiscountRules(): List[(Order => Boolean, Order => Double)] = {
         List(
-            ((order: Order) => Rules.isAQualified(order), (order: Order) => Rules.A(order))
-            //            ((order: Order) => isBQualified(order), (order: Order) => B(order)),
-            //            ((order: Order) => isCQualified(order), (order: Order) => C(order))
+            ((order: Order) => Rules.isAQualified(order), (order: Order) => Rules.A(order)),
+                ((order: Order) => Rules.isBQualified(order), (order: Order) => Rules.B(order)),
+                ((order: Order) => Rules.isCQualified(order), (order: Order) => Rules.C(order)),
+                ((order: Order) => Rules.isDQualified(order), (order: Order) => Rules.D(order)),
+                ((order: Order) => Rules.isEQualified(order), (order: Order) => Rules.E(order))
         )
     }
 
-    // function that takes order and apply list of rules on it and return order with dicount
+    // function that takes order and apply list of rules on it and return order with discount
     def getOrderWithDiscount(order: Order, rules: List[(Order => Boolean, Order => Double)]): Order = {
         val discount = rules.filter(_._1(order)).map(_._2(order)).sorted(Ordering[Double]).reverse
         println(discount)
         val averageDiscount = {
-            if (discount.length > 1) {discount.sum / 2}
+            if (discount.length > 1) {discount.take(2).sum / 2}
             else if (discount.length == 1) discount(0)
             else 0.0
         }
