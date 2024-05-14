@@ -4,7 +4,6 @@ import java.text.SimpleDateFormat
 import scala.math.BigDecimal
 
 
-
 object RuleEngine extends App {
 
     // Define case class Order
@@ -56,7 +55,6 @@ object RuleEngine extends App {
     // function that takes order and apply list of rules on it and return order with discount
     def getOrderWithDiscount(order: Order, rules: List[(Order => Boolean, Order => Double)]): Order = {
         val discount = rules.filter(_._1(order)).map(_._2(order)).sorted(Ordering[Double]).reverse
-        println(discount)
         val averageDiscount: Double = {
             if (discount.length > 1) { discount.take(2).sum / 2 }
             else if (discount.length == 1) discount(0)
@@ -69,5 +67,6 @@ object RuleEngine extends App {
         new_order
     }
 
-    ordersList.map(x => getOrderWithDiscount(x, getDiscountRules())).foreach(println)
+    // write to database
+    DbWriter.write(ordersList.map(x => getOrderWithDiscount(x, getDiscountRules())))
 }

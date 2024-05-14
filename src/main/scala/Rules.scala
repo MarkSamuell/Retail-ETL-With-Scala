@@ -17,7 +17,6 @@ object Rules {
         val expiryDate = order.expiryDate
         val difference = TimeUnit.DAYS.convert(expiryDate.getTime - dateFormat.parse(order.timestamp.substring(0, 10))
             .getTime, TimeUnit.MILLISECONDS)
-        println("dff: " + difference + (difference < 30))
         difference < 30
     }
 
@@ -27,7 +26,6 @@ object Rules {
         val difference = TimeUnit.DAYS.convert(expiryDate.getTime - dateFormat.parse(order.timestamp.substring(0, 10))
             .getTime, TimeUnit.MILLISECONDS).toDouble
         val discount = (30 - difference) / 100
-        println(discount)
         discount
     }
 
