@@ -1,14 +1,21 @@
 import RuleEngine.Order
-import java.sql.{Connection, Date, DriverManager, PreparedStatement, Timestamp}
-import scala.language.postfixOps
+
+import java.io.{File, FileOutputStream, PrintWriter}
+import java.time.LocalDateTime
+import java.time.format.DateTimeFormatter
+import java.sql.{Connection, Date, DriverManager, PreparedStatement}
 
 
 object DbWriter {
 
+    val logFilePath: String = "./src/main/resources/logs" // Relative path to the log file
+    val logFile: File = new File(logFilePath)
+
+
     def write(ordersList: List[Order]): Unit = {
         val url = "jdbc:oracle:thin:@//localhost:1521/XE"
-        val username = "ATTR"
-        val password = "123"
+        val username = "ATTR" // schema name
+        val password = "123" // schema password
 
         val insertStatement = {
             """
@@ -19,10 +26,11 @@ object DbWriter {
                 """.stripMargin
         }
 
-       // try {
+        try {
             Class.forName("oracle.jdbc.driver.OracleDriver") // Load the Oracle JDBC driver
             val connection: Connection = DriverManager.getConnection(url, username, password)
-            // log_event(writer, f, "Debug", "Successfully Opened database connection")
+            // Success connect message
+            logEvent(logFile, "Debug", "Successfully Opened database connection")
             // Prepare the INSERT statement
             val preparedStatement: PreparedStatement = connection.prepareStatement(insertStatement: String)
 
@@ -43,17 +51,34 @@ object DbWriter {
 
             //Execute the batch of INSERT statements
             preparedStatement.executeBatch()
-//        } catch {
-//            case e: Exception =>
-//                log_event(writer, f, "Error", s"Failed to close preparedStatement: ${e.getMessage}")
-//        } finally {
-//            // Close resources
-//            if (preparedStatement != null) preparedStatement.close()
-//            if (connection != null) connection.close()
-//            log_event(writer, f, "Info", "Successfully inserted into database")
-//            log_event(writer, f, "Debug", "Closed database connection")
-//        }
-   // }
+            // insert success message
+            logEvent(logFile, "Info", "Batch Successfully Inserted in database")
+        } catch {
+            // log error
+            case e: Exception =>
+                logEvent(logFile, "Error", s"Failed to close preparedStatement: ${e.getMessage}")
+        }
 
     }
+
+    def logEvent(file: File, logType: String, message: String): Unit = {
+        val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
+        val logMessage = s"[$timestamp] [$logType] $message"
+
+        // Check if the file exists, create it if it doesn't
+        if (!file.exists()) {
+            file.createNewFile()
+        }
+
+        val writer = new PrintWriter(new FileOutputStream(
+            file,
+            true /* append = true */))
+        try {
+            writer.println(logMessage)
+        } finally {
+            writer.close()
+        }
+    }
+
+
 }
