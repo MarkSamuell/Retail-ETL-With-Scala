@@ -16,12 +16,12 @@ The project's source code can be found [here](https://github.com/MarkSamuell/Ret
 
 This Scala script defines a rule engine responsible for calculating discounts for retail store orders based on predefined rules. Here's a brief overview of what it does:
 
-Order Definition: Defines a case class Order representing an order with various attributes such as timestamp, product name, expiry date, quantity, unit price, channel, payment method, discount, and final price.
-Parsing Orders: Reads lines from a CSV file containing order data, parses each line and converts it into an Order object.
-Discount Calculation: Defines several discount rules (A, B, C, D, E) along with their corresponding qualification functions and calculation functions.
-Rule Application: Defines a function to apply a list of discount rules to each order, calculate the discounts, and update the order with the discount and final price.
-Database Writing: Utilizes a DbWriter object to write the orders with calculated discounts to an Oracle database.
-Logging: Logs events such as successful database connection, insertion, or encountered errors using a custom logEvent method.
+- Order Definition: Defines a case class Order representing an order with various attributes such as timestamp, product name, expiry date, quantity, unit price, channel, payment method, discount, and final price.
+- Parsing Orders: Reads lines from a CSV file containing order data, parses each line and converts it into an Order object.
+- Discount Calculation: Defines several discount rules (A, B, C, D, E) along with their corresponding qualification functions and calculation functions.
+- Rule Application: Defines a function to apply a list of discount rules to each order, calculate the discounts, and update the order with the discount and final price.
+- Database Writing: Utilizes a DbWriter object to write the orders with calculated discounts to an Oracle database.
+- Logging: Logs events such as successful database connection, insertion, or encountered errors using a custom logEvent method.
 
 ### Rules.scala:
 
@@ -38,12 +38,12 @@ Rule E: Qualifies orders based on the payment method ("Visa") and applies a fixe
 
 This Scala script defines a database writer module responsible for writing order data with calculated discounts to an Oracle database. Here's a brief overview of what it does:
 
-Database Connection: Connects to an Oracle database using JDBC, with a specified URL, username, and password.
-Insert Statement: Prepares an SQL INSERT statement to insert order data into the database.
-Batch Insertion: Utilizes JDBC batch processing to efficiently insert multiple orders into the database in a single batch operation.
-Logging: Provides logging functionality to record events such as successful database connection, insertion, or any encountered errors. Log messages include timestamps, log types (Debug, Info, Error), and corresponding messages.
-Writing Orders: The write method takes a list of order objects (Order) as input and inserts them into the database using the prepared INSERT statement.
-Exception Handling: Catches any exceptions that may occur during database operations and logs corresponding error messages.
+- Database Connection: Connects to an Oracle database using JDBC, with a specified URL, username, and password.
+- Insert Statement: Prepares an SQL INSERT statement to insert order data into the database.
+- Batch Insertion: Utilizes JDBC batch processing to efficiently insert multiple orders into the database in a single batch operation.
+- Logging: Provides logging functionality to record events such as successful database connection, insertion, or any encountered errors. Log messages include timestamps, log types (Debug, Info, Error), and corresponding messages.
+- Writing Orders: The write method takes a list of order objects (Order) as input and inserts them into the database using the prepared INSERT statement.
+- Exception Handling: Catches any exceptions that may occur during database operations and logs corresponding error messages.
 
 
 ## Problem Statement
