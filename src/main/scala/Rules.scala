@@ -3,7 +3,6 @@ import java.text.SimpleDateFormat
 import RuleEngine.Order
 
 
-
 object Rules {
 
     // Date format for parsing dates

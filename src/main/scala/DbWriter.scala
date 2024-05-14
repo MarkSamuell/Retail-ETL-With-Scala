@@ -1,5 +1,4 @@
 import RuleEngine.Order
-
 import java.io.{File, FileOutputStream, PrintWriter}
 import java.time.LocalDateTime
 import java.time.format.DateTimeFormatter
@@ -79,6 +78,4 @@ object DbWriter {
             writer.close()
         }
     }
-
-
 }
