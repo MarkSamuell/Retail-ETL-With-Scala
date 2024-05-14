@@ -3,10 +3,14 @@
 ## Overview
 This ETL (Extract, Transform, Load) project aims to develop a rule engine for a retail store to qualify orders' transactions for discounts based on a set of predefined rules. The discounts are automatically calculated according to specific criteria such as product expiration, product type, special promotions, and quantity purchased. The project emphasizes functional programming principles and clean, maintainable code.
 
+
 ## Project Code
 The project's source code can be found [here](https://github.com/MarkSamuell/Retail-Rule-Engine-with-Scala/tree/master/src/main/scala).
 
-#### RuleEngine.scala:
+![ETL Process](process.PNG)
+
+
+### RuleEngine.scala:
 
 This Scala script defines a rule engine responsible for calculating discounts for retail store orders based on predefined rules. Here's a brief overview of what it does:
 
@@ -17,7 +21,7 @@ Rule Application: Defines a function to apply a list of discount rules to each o
 Database Writing: Utilizes a DbWriter object to write the orders with calculated discounts to an Oracle database.
 Logging: Logs events such as successful database connection, insertion, or encountered errors using a custom logEvent method.
 
-#### Rules.scala:
+### Rules.scala:
 
 This Scala script defines the discount qualification and calculation rules used by the rule engine. Here's a brief overview of what it does:
 
@@ -28,7 +32,7 @@ Rule C: Qualifies orders based on specific dates (23rd of March) and applies a f
 Rule D: Qualifies orders made through a specific channel ("App") and calculates the discount based on the quantity purchased.
 Rule E: Qualifies orders based on the payment method ("Visa") and applies a fixed discount.
 
-#### DbWriter.scala:
+### DbWriter.scala:
 
 This Scala script defines a database writer module responsible for writing order data with calculated discounts to an Oracle database. Here's a brief overview of what it does:
 
@@ -43,8 +47,6 @@ Exception Handling: Catches any exceptions that may occur during database operat
 ## Problem Statement
 The retail store requires a rule engine to automate the qualification of discounts for order transactions. The discounts are determined based on several qualifying rules and calculation rules, including product expiration, product type, special promotions, and quantity purchased. Transactions that qualify for multiple discounts receive the top two discounts, and their average is applied.
 
-## Process
-![ETL Process](process.PNG)
 
 ## Milestones
 1. **Rule Definition:** Define the qualifying rules and calculation rules for discounts.
