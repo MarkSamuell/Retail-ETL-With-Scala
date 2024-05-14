@@ -1,0 +1,5 @@
+[2024-05-14 15:17:54] [Debug] Successfully Opened database connection
+[2024-05-14 15:17:54] [Error] Failed to close preparedStatement: ORA-17041: Missing IN or OUT parameter at index: 10
+https://docs.oracle.com/error-help/db/ora-17041/
+[2024-05-14 15:18:34] [Debug] Successfully Opened database connection
+[2024-05-14 15:18:34] [Info] Batch Successfully Inserted in database
