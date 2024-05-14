@@ -60,6 +60,7 @@ object DbWriter {
 
     }
 
+    // Create logging function 
     def logEvent(file: File, logType: String, message: String): Unit = {
         val timestamp = LocalDateTime.now().format(DateTimeFormatter.ofPattern("yyyy-MM-dd HH:mm:ss"))
         val logMessage = s"[$timestamp] [$logType] $message"
