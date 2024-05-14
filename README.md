@@ -7,6 +7,8 @@ This ETL (Extract, Transform, Load) project aims to develop a rule engine for a 
 ## Project Code
 The project's source code can be found [here](https://github.com/MarkSamuell/Retail-Rule-Engine-with-Scala/tree/master/src/main/scala).
 
+### Process flow:
+
 ![ETL Process](process.PNG)
 
 
